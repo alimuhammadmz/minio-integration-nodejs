@@ -9,15 +9,13 @@ async function insertObject(request, response) {
   console.log("Inserting Object");
   minioClient = connectMinio();
   console.log(minioClient)
-  var PATH = "TESTING";
+
   response.status(200).json({
     data: {
       status: "success",
       message: "Item has been added successfully!"
     },
   });
-  
-  console.log("The path is:", PATH)
 }
 
 const connectMinio = (req, res) =>{
@@ -25,14 +23,14 @@ const connectMinio = (req, res) =>{
 
   var minioClient = new Minio.Client({
     endPoint: 'play.min.io',
-    port: 9000,
+    port: process.env.PORT,
     useSSL: true,
-    accessKey: 'Q3AM3UQ867SPQQA43P2F',
-    secretKey: 'zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG'
+    accessKey: process.env.ACCESSKEY,
+    secretKey: process.env.SECRETKEY
   });
 
-  var filePath = 'C:/Users/hp/Downloads/zakat-affi.pdf';
-  const metadata = "size: 12kb";
+  var filePath = process.env.PATH;
+  const metadata = process.env.METADATA;
   var fileStat = Fs.stat(filePath, function(err, stats) {
     if (err) {
       return console.log(err)
